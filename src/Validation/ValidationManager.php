@@ -2,6 +2,7 @@
 
 namespace App\Validation;
 
+use App\Validation\Event\EventStoreRequest;
 use App\Validation\Login\LoginRequest;
 use App\Validation\Registration\RegistrtionRequest;
 use Exception;
@@ -11,11 +12,13 @@ class ValidationManager
 
     public $registrtionRequest;
     public $loginRequest;
+    public $eventStoreRequest;
 
     public function __construct()
     {
         $this->registrtionRequest = new RegistrtionRequest();
         $this->loginRequest = new LoginRequest();
+        $this->eventStoreRequest = new EventStoreRequest();
     }
 
     public function registrationValidation(array $data)
@@ -26,6 +29,11 @@ class ValidationManager
     public function loginValidation(array $data)
     {
         $this->loginRequest->validate($data);
+    }
+
+    public function eventStoreValidation(array $data)
+    {
+        $this->eventStoreRequest->validate($data);
     }
 
 

@@ -13,17 +13,7 @@ class AuthService
         $this->userModel = new User();
     }
 
-    public function register(array $data)
-    {
-        $dataArr = self::regRequestDataManage($data);
-
-        $dbArr = self::escapeString($dataArr);
-
-        $this->userModel->insert($dbArr);
-    }
-
-    // public function login(array $data): array|bool
-    public function login(array $data)
+    public function login(array $data): array|bool
     {
         $email = self::requestSanitize($data['email']);
         $password = $data['password'];

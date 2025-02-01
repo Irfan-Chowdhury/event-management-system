@@ -2,6 +2,7 @@
 
 use App\Controllers\HomeController;
 use App\Controllers\AuthController;
+use App\Controllers\EventController;
 use App\Router;
 
 $router = new Router();
@@ -11,6 +12,11 @@ $router->post('/registration', AuthController::class, 'registration');
 
 $router->get('/login', AuthController::class, 'loginForm');
 $router->post('/login', AuthController::class, 'login');
+
+
+$router->get('/events', EventController::class, 'index');
+$router->post('/events/store', EventController::class, 'store');
+
 
 $router->get('/', HomeController::class, 'index');
 $router->get('/create', HomeController::class, 'create');
