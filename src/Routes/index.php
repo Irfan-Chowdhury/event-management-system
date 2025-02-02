@@ -16,6 +16,9 @@ $router->post('/login', AuthController::class, 'login');
 
 $router->get('/events', EventController::class, 'index');
 $router->post('/events/store', EventController::class, 'store');
+$router->get('/events/edit', EventController::class, 'edit');
+$router->post('/events/update', EventController::class, 'update');
+$router->get('/events/delete', EventController::class, 'delete');
 
 
 $router->get('/', HomeController::class, 'index');

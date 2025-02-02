@@ -71,4 +71,43 @@ class DatabaseManager
             return false;
         }
     }
+
+    public function update($query, $params = [], $types = "")
+    {
+        $stmt = $this->link->prepare($query);
+        
+        if ($params) {
+            $stmt->bind_param($types, ...$params);
+        }
+        
+        $stmt->execute();
+        
+        if ($stmt->affected_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function delete($query, $params = [], $types = "")
+    {
+        $stmt = $this->link->prepare($query);
+        
+        if ($params) {
+            $stmt->bind_param($types, ...$params);
+        }
+        
+        $stmt->execute();
+        
+        if ($stmt->affected_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function __destruct()
+    {
+        $this->link->close();
+    }
 }

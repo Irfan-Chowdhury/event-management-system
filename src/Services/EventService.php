@@ -26,6 +26,26 @@ class EventService
 
         $this->eventModel->insert($dbArr);
     }
+    public function getEventDataById(int $id)
+    {
+        return $this->eventModel->getById($id);
+    }
+
+    public function dataUpdate(array $data)
+    {
+        $dataArr = self::regRequestDataManage($data);
+
+        unset($data['created_at']);
+
+        $dbArr = self::escapeString($dataArr);
+
+        $this->eventModel->update($dbArr, $data['id']);
+    }
+
+    public function dataDelete(int $id)
+    {
+        $this->eventModel->delete($id);
+    }
 
     private function regRequestDataManage(array $data): array
     {

@@ -12,14 +12,12 @@
 <body>
     <div class="container mt-5">
         <h2 class="mb-4">Events List</h2>
-        <!-- Button to trigger modal -->
         <button type="button" class="btn btn-success mb-4" data-toggle="modal" data-target="#createEventModal">
             Create New Event
         </button>
         <table class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <!-- <th scope="col">#</th> -->
                     <th scope="col">Event Name</th>
                     <th scope="col">Description</th>
                     <th scope="col">Date</th>
@@ -30,15 +28,13 @@
             <tbody>                
                 <?php foreach ($getEvents as $event): ?>
                     <tr>
-                        <!-- <th scope="row"><?php echo $event['id']; ?></th> -->
                         <td><?php echo $event['title']; ?></td>
                         <td><?php echo $event['description']; ?></td>
                         <td><?php echo $event['date']; ?></td>
                         <td><?php echo $event['venue']; ?></td>
                         <td>
-                            <a href="#" class="btn btn-primary btn-sm">View</a>
-                            <a href="#" class="btn btn-warning btn-sm">Edit</a>
-                            <a href="#" class="btn btn-danger btn-sm">Delete</a>
+                            <button class="btn btn-warning btn-sm editBtn" data-id="<?php echo $event['id']; ?>" data-target="#editEventModal">Edit</button>
+                            <button class="btn btn-danger btn-sm deleteBtn" data-id="<?php echo $event['id']; ?>">Delete</button>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -81,13 +77,49 @@
         </div>
     </div>
 
+    <!-- Edit Event Modal -->
+    <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEventModalLabel">Edit Event</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateEventForm" action="/events/edit" method="POST">
+                        <input type="hidden" name="id" id="editEventId">
+                        <div class="form-group">
+                            <label>Event Title</label>
+                            <input type="text" class="form-control" name="title" id="editEventTitle">
+                        </div>
+                        <div class="form-group">
+                            <label>Event Description</label>
+                            <textarea name="description" cols="3" class="form-control" id="editEventDescription"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" class="form-control" name="date" id="editEventDate">
+                        </div>
+                        <div class="form-group">
+                            <label>Venue</label>
+                            <input type="text" class="form-control" name="venue" id="editEventVenue">
+                        </div>
+                        <button type="submit" id="editSubmitButton" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
     <script>
         $(document).ready(function() {
+
             $("#createEventForm").on("submit", function(e) {
                 e.preventDefault();
                 $('#submitButton').text('Saving...');
@@ -138,7 +170,151 @@
                     }
                 });
             });
+            
+        
+            $(document).on("click", ".editBtn", function(e) {
+                e.preventDefault(); 
+
+                $.ajax({
+                    url: "/events/edit",
+                    type: "GET",
+                    data: {
+                        id: $(this).data("id")
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $("#editEventId").val(response.id);
+                        $("#editEventTitle").val(response.title);
+                        $("#editEventDescription").val(response.description);
+                        $("#editEventDate").val(response.date);
+                        $("#editEventVenue").val(response.venue);
+                    },
+                    error: function(response, status, error) {
+                        console.log(response);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: 'Failed to fetch event data'
+                        });
+                    }
+                });
+                $("#editEventModal").modal("show");
+            });
+        
+            $("#updateEventForm").on("submit", function(e) {
+                e.preventDefault();
+                $('#editSubmitButton').text('Updating...');
+
+                $.ajax({
+                    url: "/events/update",
+                    type: "POST",
+                    data: new FormData(this),
+                    contentType: false,
+                    cache: false,
+                    processData: false,
+                    success: function(response) {
+                        console.log(response);
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
+                            didOpen: (toast) => {
+                            toast.addEventListener('mouseenter', Swal.stopTimer)
+                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                            }
+                        })
+                        Toast.fire({
+                            icon: 'success',
+                            title: response.message
+                        });
+                        $('#createEventModal').modal('hide');
+                        $('#editSubmitButton').text('Update');
+                        $('#updateEventForm')[0].reset();
+                        $("#editEventModal").modal("hide"); 
+                    },
+                    error: function(response, status, error) {
+                        console.log(response);
+                        let message;
+                        if (response.status==500) {
+                            errorMessage = response.statusText;
+                        }else {
+                            errorMessage = response.responseJSON.error.charAt(0).toUpperCase() + response.responseJSON.error.slice(1);
+                        }
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            html: '<p class="text-danger">' + errorMessage + '</p>'
+                        });
+                        $('#editSubmitButton').text('Update');
+                    }
+                });
+            });
+            
+
+                    
+            $(document).on("click", ".deleteBtn", function(e) {
+                e.preventDefault(); 
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: "/events/delete",
+                            type: "GET",
+                            data: {
+                                id: $(this).data("id")
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: response.message
+                                });
+                            },
+                            error: function(response, status, error) {
+                                console.log(response);
+                                let message;
+                                if (response.status==500) {
+                                    errorMessage = response.statusText;
+                                }else {
+                                    errorMessage = response.responseJSON.error.charAt(0).toUpperCase() + response.responseJSON.error.slice(1);
+                                }
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    html: '<p class="text-danger">' + errorMessage + '</p>'
+                                });
+                            }
+                        });
+                    }
+                });
+
+
+            });
+        
         });
+    
     </script>
 
 </body>

@@ -22,11 +22,6 @@ class EventController extends Controller
     {
         $getEvents = $this->eventService->getAllEvents();
 
-        // echo "<pre>";
-        // print_r($getEvents);
-        // echo "</pre>";
-        // return;
-
         $this->render('events/index', ['getEvents' => $getEvents]);
     }
 
@@ -48,7 +43,65 @@ class EventController extends Controller
             http_response_code(400); // HTTP 400: Bad Request
             echo json_encode(["error" => $exception->getMessage()]);
             exit;
+        }
+    }
+
+    public function edit()
+    {
+        $this->setAjaxHeaders();
+
+        try {
+            $event = $this->eventService->getEventDataById($_GET['id']);
             
+            echo json_encode($event);
+            http_response_code(200); // HTTP 200: OK
+            exit;
+
+        } catch (Exception $exception) {
+
+            http_response_code(400); // HTTP 400: Bad Request
+            echo json_encode(["error" => $exception->getMessage()]);
+            exit;
+        }
+    }
+
+    public function update()
+    {
+        $this->setAjaxHeaders();
+
+        try {
+            $this->validationManager->eventUpdateValidation($_POST);
+
+            $this->eventService->dataUpdate($_POST);
+
+            echo json_encode(["message" => "Event updated successfully"]);
+            http_response_code(200); 
+            exit;
+
+        } catch (Exception $exception) {
+
+            http_response_code(400); 
+            echo json_encode(["error" => $exception->getMessage()]);
+            exit;
+        }
+    }
+
+    public function delete()
+    {
+        $this->setAjaxHeaders();
+
+        try {
+            $this->eventService->dataDelete($_GET['id']);
+
+            echo json_encode(["message" => "Event deleted successfully"]);
+            http_response_code(200); 
+            exit;
+
+        } catch (Exception $exception) {
+
+            http_response_code(400); 
+            echo json_encode(["error" => $exception->getMessage()]);
+            exit;
         }
     }
 
