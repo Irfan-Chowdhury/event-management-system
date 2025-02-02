@@ -9,6 +9,8 @@ use App\Router;
 
 $router = new Router();
 
+$router->get('/', HomeController::class, 'landingPage');
+
 $router->get('/registration', AuthController::class, 'registrationForm');
 $router->post('/registration', AuthController::class, 'registration');
 

@@ -32,7 +32,7 @@ class EventStoreRequest
         $this->isRequired('date', $data['date']);
 
         $this->isRequired('venue', $data['venue']);
-        $this->isStringWithSpace('venue', $data['venue']);
+        // $this->isStringWithSpace('venue', $data['venue']);
 
         $this->isRequired('capacity', $data['capacity']);
         $this->isValidNumber('capacity', (int)$data['capacity']);

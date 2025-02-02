@@ -125,13 +125,6 @@ abstract class Model
         return $arrayValuesData;
     }
 
-//     public function customGetUsersFromEventAttende()
-//     {
-//         SELECT users.name, users.email
-// FROM `event_attendee_registrations` 
-// JOIN users ON users.id = event_attendee_registrations.user_id
-// WHERE `event_id` = 5
-//     }
 
     public function getAttendeesByEventId($eventId)
     {

@@ -37,7 +37,7 @@
     </section>
 
     <div class="container mt-5 text-center">
-        <h2 class="mb-4">Welcome to </h2>
+        <h2 class="mb-4">Welcome to Admin Dashboard</h2>
         <br>
         <h3>Event Management System</h3>
     </div>

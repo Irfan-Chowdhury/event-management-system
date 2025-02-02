@@ -29,10 +29,6 @@ class EventController extends Controller
             header("Location: /login");
             exit;
         }
-        // else {
-        //     header("Location: /home");
-        //     exit;
-        // }
     }
 
     public function index()

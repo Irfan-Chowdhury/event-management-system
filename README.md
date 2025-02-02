@@ -4,13 +4,19 @@
 
 </div>
 
+## About
+
+The objective of this project is to build a user-friendly, web-based event management system that enables users to create, organize, and track events, register attendees, and generate detailed event reports.
+
+
 ## Technology Used
-- PHP -8.1
+- PHP - 8.1
 - MySQL 
-- Bootstrap : v-4
+- Bootstrap - 4
 - jQuery, Ajax
 - phpMyAdmin
 - SweetAlert2
+- MVC Architecture
 
 
 ## How to run this project ?
@@ -63,31 +69,79 @@ and again run this command
 php -S localhost:9999
 ```
 
-#### Step-5 : Site Visit
+####  Step-5 :  Login Credentials
+
+- Login Page: http://localhost:9999/login
+- Email: admin@gmail.com
+- Password : admin123
+
+
+### Site Visit
 Open browser and visit that pages.
 
-- For Home Page
+- Registration Page (http://localhost:9999/registration)
 
-```bash
-http://localhost:9999/
+<img src="https://snipboard.io/dKZyM2.jpg">
 
-```
+<br>
 
-<!-- <img src="https://snipboard.io/5XEfVR.jpg">
+- Login Page (http://localhost:9999/login)
+
+<img src="https://snipboard.io/RCvHu3.jpg">
 
 
-</br></br>
+<br>
 
-- For Create Page
+- Admin Home Page (http://localhost:9999/home)
 
-```bash
-http://localhost:9999/create
+<img src="https://snipboard.io/Ql98pN.jpg">
 
-```
 
-<img src="https://snipboard.io/kWS3o7.jpg">
- -->
+<br>
 
+- Event  Page (http://localhost:9999/events)
+
+<img src="https://snipboard.io/JImrMn.jpg">
+
+<br>
+
+- Event  Create 
+
+<img src="https://snipboard.io/vXPj28.jpg">
+
+<br>
+
+- Event  Edit 
+
+<img src="https://snipboard.io/G1qjTF.jpg>
+
+
+<br>
+
+- Attendee Lists Report : (http://localhost:9999/reports)
+
+<img src="https://snipboard.io/69xYE1.jpg">
+
+<br>
+
+- CSV Format
+
+<img src="https://snipboard.io/jTGuvQ.jpg">
+
+
+### Others
+
+
+- Validation For Require Field : 
+<img src="https://snipboard.io/MBIwbk.jpg">
+
+<br>
+
+- Validation For Unique Field : 
+<img src="https://snipboard.io/6o7CYy.jpg">
+
+- Success Message Added : 
+<img src="https://snipboard.io/uG1hzf.jpg">
 
 
 

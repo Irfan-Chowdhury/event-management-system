@@ -17,7 +17,13 @@ class EventService
 
     public function getAllEvents(): array|bool
     {
-        return $this->eventModel->getAll();
+        $allEvents = $this->eventModel->getAll();
+
+        foreach ($allEvents as &$event) {
+            $event['total_attendee'] = $this->eventModel->totalAttendees($event['id']);
+        }
+
+        return $allEvents;
     }
 
     public function dataStore(array $data)

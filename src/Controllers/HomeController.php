@@ -8,13 +8,8 @@ use Exception;
 class HomeController extends Controller
 {
 
-    public function __construct()
-    {
-        session_start(); 
-        self::isAuthenticated();
-    }
 
-    private function isAuthenticated()
+    public function landingPage()
     {
         if (!isset($_SESSION['user'])) {
             header("Location: /login");
@@ -24,6 +19,17 @@ class HomeController extends Controller
 
     public function index()
     {
+        session_start(); 
+        self::isAuthenticated();
+
         $this->render('home/index');
+    }
+
+    private function isAuthenticated()
+    {
+        if (!isset($_SESSION['user'])) {
+            header("Location: /login");
+            exit;
+        }
     }
 }

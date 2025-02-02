@@ -51,6 +51,7 @@
                     <th scope="col">Date</th>
                     <th scope="col">Venue</th>
                     <th scope="col">Capacity</th>
+                    <th scope="col">Total Attendee</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -61,7 +62,8 @@
                         <td><?php echo $event['description']; ?></td>
                         <td><?php echo $event['date']; ?></td>
                         <td><?php echo $event['venue']; ?></td>
-                        <td><?php echo $event['capacity']; ?></td>
+                        <td class="text-center"><?php echo $event['capacity']; ?></td>
+                        <td class="text-center"><?php echo $event['total_attendee']; ?></td>
                         <td>
                             <button class="btn btn-warning btn-sm editBtn" data-id="<?php echo $event['id']; ?>" data-target="#editEventModal">Edit</button>
                             <button class="btn btn-danger btn-sm deleteBtn" data-id="<?php echo $event['id']; ?>">Delete</button>
