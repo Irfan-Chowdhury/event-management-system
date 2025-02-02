@@ -8,6 +8,16 @@
 
 The objective of this project is to build a user-friendly, web-based event management system that enables users to create, organize, and track events, register attendees, and generate detailed event reports.
 
+ **Key features include:**
+
+- Implementing user login and registration with secure password hashing.
+- Authenticated users can create, edit, and delete events.
+-Providing an event registration form that prevents registrations beyond the maximum capacity.
+- Integrating Bootstrap DataTable with search, pagination, and sorting features.
+- Enabling admins to download attendee lists for specific events in CSV format.
+- Maintaining server-side validation to ensure data integrity and security.
+- Using prepared statements to prevent SQL injection vulnerabilities.
+-Following the MVC architecture for better code organization and maintainability.
 
 ## Technology Used
 - PHP - 8.1
