@@ -15,12 +15,24 @@ class AuthController extends Controller
 
     public function __construct()
     {
+
         $this->validationManager = new ValidationManager();
         $this->authService = new AuthService();
     }
 
+    private function isAuthenticated()
+    {
+        if (isset($_SESSION['user'])) {
+            header("Location: /home");
+            exit;
+        }
+    }
+
     public function registrationForm()
     {
+        session_start(); 
+        self::isAuthenticated(); 
+
         return $this->render('auth/registration');
     }
 
@@ -47,6 +59,9 @@ class AuthController extends Controller
 
     public function loginForm()
     {
+        session_start(); 
+        self::isAuthenticated(); 
+
         return $this->render('auth/login');
     }
 
@@ -72,6 +87,14 @@ class AuthController extends Controller
 
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0"); // Prevent caching issues
         header("Location: " . $_SERVER['HTTP_REFERER']);
+        exit;
+    }
+
+    public function logout()
+    {
+        session_start();
+        session_destroy();
+        header("Location: /login");
         exit;
     }
 }

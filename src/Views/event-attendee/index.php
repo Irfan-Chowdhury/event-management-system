@@ -14,7 +14,7 @@
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Register</h4>
+                        <h4 class="card-title text-center">Event Registration Form</h4>
                     </div>
                     <div class="card-body">
                         <?php
@@ -39,24 +39,34 @@
                                 unset($_SESSION['error_message']);
                             }
                         ?>
-                        <form action="/registration" method="POST">
+                        <form action="/event-attendee-reg-store" method="POST">
+                            <div class="form-group">
+                                <label for="fullname">Event</label>
+                                <select name="event_id" id="event_id" class="form-control">
+                                    <option value="">--Select Event--</option>
+                                    <?php foreach ($getEvents as $event) : ?>
+                                        <option value="<?php echo $event['id']; ?>"> <?php echo $event['title']; ?> </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                             <div class="form-group">
                                 <label for="fullname">Full Name</label>
                                 <input type="text" class="form-control" id="name" name="name">
                             </div>
                             <div class="form-group">
-                                <label for="email">Email address</label>
+                                <label for="email">Email</label>
                                 <input type="email" class="form-control" id="email" name="email">
                             </div>
                             <div class="form-group">
-                                <label for="password">Password</label>
-                                <input type="password" class="form-control" id="password" name="password">
+                                <label>Phone</label>
+                                <input type="text" class="form-control" id="phone" name="phone">
                             </div>
                             <div class="form-group">
-                                <label for="confirm_password">Confirm Password</label>
-                                <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                                <label>Address</label>
+                                <textarea name="address" cols="30" rows="3" class="form-control"></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
                         </form>
                     </div>
                 </div>

@@ -1,5 +1,7 @@
 <?php 
 
+declare(strict_types=1);
+
 namespace App\Validation\Event;
 
 use App\Models\Event;
@@ -37,7 +39,7 @@ class EventUpdateRequest
     {
         $user = $this->eventModel->getById($id);
         if (!$user && $user['title'] !== $title) {
-            $checkOnOther = $this->eventModel->fetchDataByAttribute('title', $title);
+            $checkOnOther = $this->eventModel->findDataByAttribute('title', $title);
             if ($checkOnOther) {
                 throw new Exception("Title already exist", 400);
             }

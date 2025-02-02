@@ -47,7 +47,7 @@ class RegistrtionRequest
 
     public function isEmailExist($email)
     {
-        $user = $this->userModel->fetchDataByAttribute('email', $email);
+        $user = $this->userModel->findDataByAttribute('email', $email);
         if ($user) {
             throw new Exception("Email already exist", 400);
         }

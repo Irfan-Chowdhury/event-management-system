@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use Exception;
@@ -49,5 +51,13 @@ trait CommonValidationTrait
             throw new Exception("Invalid email", 400);
         }
     }
+
+    public function isValidNumber(string $key, int $value)
+    {
+        if (!is_numeric($value)) {
+            throw new Exception("$key must be number", 400);
+        }
+    }
+
 
 }

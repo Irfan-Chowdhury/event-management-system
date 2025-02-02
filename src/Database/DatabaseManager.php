@@ -106,6 +106,11 @@ class DatabaseManager
         }
     }
 
+    public function lastInsertId()
+    {
+        return $this->link->insert_id;
+    }
+
     public function __destruct()
     {
         $this->link->close();

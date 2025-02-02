@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-class Order extends Model
+class EventAttendeeRegistration extends Model
 {
-    public $table = 'orders';   
+    public $table = 'event_attendee_registrations';   
 
     public function mysqliRealEscapeString($value)
     {

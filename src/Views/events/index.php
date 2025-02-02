@@ -11,8 +11,35 @@
 </head>
 
 <body>
+    <section class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light bg-info">
+            <a class="navbar-brand text-light" href="#">Event Management System</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/events">Events</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="/reports">Reports</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="btn btn-danger nav-link text-light" href="/logout">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </section>
+
     <div class="container mt-5">
-        <h2 class="mb-4">Events List</h2>
+        <h2 class="mb-4 text-center">Events List</h2>
         <button type="button" class="btn btn-success mb-4" data-toggle="modal" data-target="#createEventModal">
             Create New Event
         </button>
@@ -23,6 +50,7 @@
                     <th scope="col">Description</th>
                     <th scope="col">Date</th>
                     <th scope="col">Venue</th>
+                    <th scope="col">Capacity</th>
                     <th scope="col">Actions</th>
                 </tr>
             </thead>
@@ -33,6 +61,7 @@
                         <td><?php echo $event['description']; ?></td>
                         <td><?php echo $event['date']; ?></td>
                         <td><?php echo $event['venue']; ?></td>
+                        <td><?php echo $event['capacity']; ?></td>
                         <td>
                             <button class="btn btn-warning btn-sm editBtn" data-id="<?php echo $event['id']; ?>" data-target="#editEventModal">Edit</button>
                             <button class="btn btn-danger btn-sm deleteBtn" data-id="<?php echo $event['id']; ?>">Delete</button>
@@ -71,6 +100,10 @@
                             <label>Venue</label>
                             <input type="text" class="form-control" name="venue">
                         </div>
+                        <div class="form-group">
+                            <label>Capacity</label>
+                            <input type="number" class="form-control" name="capacity">
+                        </div>
                         <button type="submit" id="submitButton" class="btn btn-primary">Save</button>
                     </form>
                 </div>
@@ -106,6 +139,10 @@
                         <div class="form-group">
                             <label>Venue</label>
                             <input type="text" class="form-control" name="venue" id="editEventVenue">
+                        </div>
+                        <div class="form-group">
+                            <label>Capacity</label>
+                            <input type="text" class="form-control" name="capacity" id="editEventCapacity">
                         </div>
                         <button type="submit" id="editSubmitButton" class="btn btn-primary">Update</button>
                     </form>
@@ -196,6 +233,7 @@
                         $("#editEventDescription").val(response.description);
                         $("#editEventDate").val(response.date);
                         $("#editEventVenue").val(response.venue);
+                        $("#editEventCapacity").val(response.capacity);
                     },
                     error: function(response, status, error) {
                         console.log(response);

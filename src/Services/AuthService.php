@@ -13,17 +13,19 @@ class AuthService
         $this->userModel = new User();
     }
 
+    public function register(array $data)
+    {
+        $dataArr = self::regRequestDataManage($data);
+        $dbArr = self::escapeString($dataArr);
+        $this->userModel->insert($dbArr);
+    }
+
     public function login(array $data): array|bool
     {
         $email = self::requestSanitize($data['email']);
         $password = $data['password'];
 
-        $user = $this->userModel->fetchDataByAttribute('email',$email);
-        
-        // echo "<pre>";
-        // print_r($user);
-        // echo "</pre>";
-        // return;
+        $user = $this->userModel->findDataByAttribute('email',$email);
 
         if ($user) {
             if (password_verify($password, $user['password'])) {
@@ -38,6 +40,7 @@ class AuthService
         return [
             'name'  => self::requestSanitize($_POST['name']),
             'email'  => self::requestSanitize($_POST['email']),
+            'role'  => 'admin',
             'password'  => password_hash($_POST['password'], PASSWORD_DEFAULT),
         ];
     }

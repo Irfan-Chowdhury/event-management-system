@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controllers;
 
 use App\Controller;
@@ -27,6 +29,10 @@ class EventController extends Controller
             header("Location: /login");
             exit;
         }
+        // else {
+        //     header("Location: /home");
+        //     exit;
+        // }
     }
 
     public function index()
@@ -62,15 +68,15 @@ class EventController extends Controller
         $this->setAjaxHeaders();
 
         try {
-            $event = $this->eventService->getEventDataById($_GET['id']);
+            $event = $this->eventService->getEventDataById((int) $_GET['id']);
             
             echo json_encode($event);
-            http_response_code(200); // HTTP 200: OK
+            http_response_code(200); 
             exit;
 
         } catch (Exception $exception) {
 
-            http_response_code(400); // HTTP 400: Bad Request
+            http_response_code(400); 
             echo json_encode(["error" => $exception->getMessage()]);
             exit;
         }
@@ -102,7 +108,7 @@ class EventController extends Controller
         $this->setAjaxHeaders();
 
         try {
-            $this->eventService->dataDelete($_GET['id']);
+            $this->eventService->dataDelete((int) $_GET['id']);
 
             echo json_encode(["message" => "Event deleted successfully"]);
             http_response_code(200); 

@@ -22,13 +22,31 @@ abstract class Model
         return $result;
     }
 
-    public function fetchDataByAttribute($key, $value) 
+
+    public function getAllBySingleAttribute($key, $value) 
+    {
+        $query = "SELECT * FROM $this->table WHERE `$key` = ?";
+        $result = $this->db->select($query, [$value], "s");
+    
+        return $result;
+    }
+
+    public function findDataByAttribute($key, $value) 
     {
         $query = "SELECT * FROM $this->table WHERE `$key` = ? LIMIT 1";
         $result = $this->db->select($query, [$value], "s");
     
         return $result ? $result[0] : null;
     }
+
+    public function findDataByTwoAttributes($key1, $key2, $value1, $value2)
+    {
+        $query = "SELECT * FROM $this->table WHERE `$key1` = ? AND `$key2` = ? LIMIT 1";
+        $result = $this->db->select($query, [$value1, $value2], "ss");
+    
+        return $result ? $result[0] : null;
+    }
+   
 
     public function checkUniqueExceptId($key, $value, $id) 
     {
@@ -58,8 +76,11 @@ abstract class Model
 
         if(!$result) {
             throw new Exception("Internal Server Error", 500);
-        } 
+        }
+
+        return $this->db->lastInsertId();
     }
+    
 
     public function update(array $data, $id)
     {

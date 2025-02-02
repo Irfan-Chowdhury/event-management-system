@@ -1,5 +1,7 @@
 <?php 
 
+declare(strict_types=1);
+
 namespace App\Services;
 
 use App\Models\Event;
@@ -51,11 +53,12 @@ class EventService
     {
         return [
             'title'  => self::requestSanitize($data['title']),
-            'user_id'  => 1,
+            'user_id'  => $_SESSION['user']['id'],
             'description'  => self::requestSanitize($data['description']),
             'date'  => date('Y-m-d', strtotime($data['date'])),
             'venue'  => self::requestSanitize($data['venue']),
             'created_at' => date('Y-m-d H:i:s'),
+            'capacity' => (int) $data['capacity'],
         ];
     }
 

@@ -1,5 +1,7 @@
 <?php 
 
+declare(strict_types=1);
+
 namespace App\Validation\Event;
 
 use App\Models\Event;
@@ -31,11 +33,15 @@ class EventStoreRequest
 
         $this->isRequired('venue', $data['venue']);
         $this->isStringWithSpace('venue', $data['venue']);
+
+        $this->isRequired('capacity', $data['capacity']);
+        $this->isValidNumber('capacity', (int)$data['capacity']);
+
     }
 
     public function isTitleUnique($title)
     {
-        $user = $this->eventModel->fetchDataByAttribute('title', $title);
+        $user = $this->eventModel->findDataByAttribute('title', $title);
         if ($user) {
             throw new Exception("Title already exist", 400);
         }
