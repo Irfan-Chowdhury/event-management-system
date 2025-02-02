@@ -14,8 +14,19 @@ class EventController extends Controller
 
     public function __construct()
     {
+        session_start(); 
+        self::isAuthenticated(); 
+
         $this->validationManager = new ValidationManager();
         $this->eventService = new EventService();
+    }
+
+    private function isAuthenticated()
+    {
+        if (!isset($_SESSION['user'])) {
+            header("Location: /login");
+            exit;
+        }
     }
 
     public function index()
