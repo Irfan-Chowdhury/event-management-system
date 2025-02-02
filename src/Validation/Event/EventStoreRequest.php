@@ -26,7 +26,6 @@ class EventStoreRequest
 
         $this->isRequired('description', $data['description']);
         $this->isWordLimit('description', $data['description'], 500);
-        $this->isStringWithSpace('description', $data['description']);
 
         $this->isRequired('date', $data['date']);
 

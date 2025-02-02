@@ -7,6 +7,7 @@
     <title>Event Management System</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css">
 </head>
 
 <body>
@@ -15,7 +16,7 @@
         <button type="button" class="btn btn-success mb-4" data-toggle="modal" data-target="#createEventModal">
             Create New Event
         </button>
-        <table class="table table-bordered">
+        <table id="eventsTable" class="table table-bordered">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">Event Name</th>
@@ -116,9 +117,13 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
 
     <script>
         $(document).ready(function() {
+            $('#eventsTable').DataTable();
+         
 
             $("#createEventForm").on("submit", function(e) {
                 e.preventDefault();
@@ -138,7 +143,7 @@
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 2000,
                             timerProgressBar: true,
                             didOpen: (toast) => {
                             toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -152,6 +157,10 @@
                         $('#createEventModal').modal('hide');
                         $('#submitButton').text('Save');
                         $('#createEventForm')[0].reset();
+                        // Reload the page after 1 second to reflect the changes
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
                     },
                     error: function(response, status, error) {
                         console.log(response);
@@ -170,7 +179,6 @@
                     }
                 });
             });
-            
         
             $(document).on("click", ".editBtn", function(e) {
                 e.preventDefault(); 
@@ -214,12 +222,11 @@
                     processData: false,
                     success: function(response) {
                         console.log(response);
-
                         const Toast = Swal.mixin({
                             toast: true,
                             position: 'top-end',
                             showConfirmButton: false,
-                            timer: 3000,
+                            timer: 2000,
                             timerProgressBar: true,
                             didOpen: (toast) => {
                             toast.addEventListener('mouseenter', Swal.stopTimer)
@@ -234,6 +241,10 @@
                         $('#editSubmitButton').text('Update');
                         $('#updateEventForm')[0].reset();
                         $("#editEventModal").modal("hide"); 
+                        // Reload the page after 1 second to reflect the changes
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
                     },
                     error: function(response, status, error) {
                         console.log(response);
@@ -252,9 +263,7 @@
                     }
                 });
             });
-            
-
-                    
+                          
             $(document).on("click", ".deleteBtn", function(e) {
                 e.preventDefault(); 
 
@@ -288,7 +297,7 @@
                                     }
                                 })
                                 Toast.fire({
-                                    icon: 'success',
+                            icon: 'success',
                                     title: response.message
                                 });
                             },
@@ -305,6 +314,28 @@
                                     title: 'Error',
                                     html: '<p class="text-danger">' + errorMessage + '</p>'
                                 });
+                            },
+                            success: function(response) {
+                                console.log(response);
+                                const Toast = Swal.mixin({
+                                    toast: true,
+                                    position: 'top-end',
+                                    showConfirmButton: false,
+                                    timer: 3000,
+                                    timerProgressBar: true,
+                                    didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                    }
+                                })
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: response.message
+                                });
+                                // Reload the page after 1 second to reflect the changes
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 2000);
                             }
                         });
                     }
