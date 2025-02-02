@@ -88,23 +88,28 @@
                     <form id="createEventForm" action="/events/store" method="POST">
                         <div class="form-group">
                             <label>Event Title</label>
-                            <input type="text" class="form-control" name="title">
+                            <input type="text" class="form-control" name="title" required>
+                            <span class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label>Event Description</label>
-                            <textarea name="description" cols="3" class="form-control" name="description"></textarea>
+                            <textarea name="description" cols="3" class="form-control" name="description" required ></textarea>
+                            <span class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label>Date</label>
-                            <input type="date" class="form-control" name="date">
+                            <input type="date" class="form-control" name="date" required>
+                            <span class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label>Venue</label>
-                            <input type="text" class="form-control" name="venue">
+                            <input type="text" class="form-control" name="venue" required>
+                            <span class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label>Capacity</label>
-                            <input type="number" class="form-control" name="capacity">
+                            <input type="number" class="form-control" name="capacity" required>
+                            <span class="text-danger"></span>
                         </div>
                         <button type="submit" id="submitButton" class="btn btn-primary">Save</button>
                     </form>
@@ -112,7 +117,7 @@
             </div>
         </div>
     </div>
-
+    
     <!-- Edit Event Modal -->
     <div class="modal fade" id="editEventModal" tabindex="-1" aria-labelledby="editEventModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -128,23 +133,28 @@
                         <input type="hidden" name="id" id="editEventId">
                         <div class="form-group">
                             <label>Event Title</label>
-                            <input type="text" class="form-control" name="title" id="editEventTitle">
+                            <input type="text" class="form-control" name="title" id="editEventTitle" required>
+                            <span class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label>Event Description</label>
-                            <textarea name="description" cols="3" class="form-control" id="editEventDescription"></textarea>
+                            <textarea name="description" cols="3" class="form-control" id="editEventDescription" required></textarea>
+                            <span class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label>Date</label>
-                            <input type="date" class="form-control" name="date" id="editEventDate">
+                            <input type="date" class="form-control" name="date" id="editEventDate" required>
+                            <span class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label>Venue</label>
-                            <input type="text" class="form-control" name="venue" id="editEventVenue">
+                            <input type="text" class="form-control" name="venue" id="editEventVenue" required>
+                            <span class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label>Capacity</label>
-                            <input type="text" class="form-control" name="capacity" id="editEventCapacity">
+                            <input type="text" class="form-control" name="capacity" id="editEventCapacity" required>
+                            <span class="text-danger"></span>
                         </div>
                         <button type="submit" id="editSubmitButton" class="btn btn-primary">Update</button>
                     </form>
@@ -162,61 +172,94 @@
     <script>
         $(document).ready(function() {
             $('#eventsTable').DataTable();
-         
-
+            
             $("#createEventForm").on("submit", function(e) {
                 e.preventDefault();
-                $('#submitButton').text('Saving...');
+                let isValid = true;
 
-                $.ajax({
-                    url: "/events/store",
-                    type: "POST",
-                    data: new FormData(this),
-                    contentType: false,
-                    cache: false,
-                    processData: false,
-                    success: function(response) {
-                        console.log(response);
+                // Clear previous error messages
+                $(this).find("span").text("");
 
-                        const Toast = Swal.mixin({
-                            toast: true,
-                            position: 'top-end',
-                            showConfirmButton: false,
-                            timer: 2000,
-                            timerProgressBar: true,
-                            didOpen: (toast) => {
-                            toast.addEventListener('mouseenter', Swal.stopTimer)
-                            toast.addEventListener('mouseleave', Swal.resumeTimer)
+                // Validate Event Title
+                if ($("input[name='title']").val().trim() === "") {
+                    $("input[name='title']").next("span").text("Event title is required.");
+                    isValid = false;
+                }
+
+                // Validate Event Description
+                if ($("textarea[name='description']").val().trim() === "") {
+                    $("textarea[name='description']").next("span").text("Event description is required.");
+                    isValid = false;
+                }
+
+                // Validate Date
+                if ($("input[name='date']").val().trim() === "") {
+                    $("input[name='date']").next("span").text("Event date is required.");
+                    isValid = false;
+                }
+
+                // Validate Venue
+                if ($("input[name='venue']").val().trim() === "") {
+                    $("input[name='venue']").next("span").text("Event venue is required.");
+                    isValid = false;
+                }
+
+                // Validate Capacity
+                if ($("input[name='capacity']").val().trim() === "") {
+                    $("input[name='capacity']").next("span").text("Event capacity is required.");
+                    isValid = false;
+                }
+
+                if (isValid) {
+                    $('#submitButton').text('Saving...');
+                    $.ajax({
+                        url: "/events/store",
+                        type: "POST",
+                        data: new FormData(this),
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function(response) {
+                            console.log(response);
+                            const Toast = Swal.mixin({
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 2000,
+                                timerProgressBar: true,
+                                didOpen: (toast) => {
+                                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                                }
+                            })
+                            Toast.fire({
+                                icon: 'success',
+                                title: response.message
+                            });
+                            $('#createEventModal').modal('hide');
+                            $('#submitButton').text('Save');
+                            $('#createEventForm')[0].reset();
+                            setTimeout(() => {
+                                location.reload();
+                            }, 2000);
+                        },
+                        error: function(response, status, error) {
+                            console.log(response);
+                            let message;
+                            if (response.status == 500) {
+                                errorMessage = response.statusText;
+                            } else {
+                                errorMessage = response.responseJSON.error.charAt(0).toUpperCase() + response.responseJSON.error.slice(1);
                             }
-                        })
-                        Toast.fire({
-                            icon: 'success',
-                            title: response.message
-                        });
-                        $('#createEventModal').modal('hide');
-                        $('#submitButton').text('Save');
-                        $('#createEventForm')[0].reset();
-                        // Reload the page after 1 second to reflect the changes
-                        setTimeout(() => {
-                            location.reload();
-                        }, 2000);
-                    },
-                    error: function(response, status, error) {
-                        console.log(response);
-                        let message;
-                        if (response.status==500) {
-                            errorMessage = response.statusText;
-                        }else {
-                            errorMessage = response.responseJSON.error.charAt(0).toUpperCase() + response.responseJSON.error.slice(1);
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                html: '<p class="text-danger">' + errorMessage + '</p>'
+                            });
+                            $('#submitButton').text('Save');
                         }
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            html: '<p class="text-danger">' + errorMessage + '</p>'
-                        });
-                        $('#submitButton').text('Save');
-                    }
-                });
+                    });
+                }
             });
         
             $(document).on("click", ".editBtn", function(e) {

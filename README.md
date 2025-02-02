@@ -15,7 +15,7 @@ The objective of this project is to build a user-friendly, web-based event manag
 -Providing an event registration form that prevents registrations beyond the maximum capacity.
 - Integrating Bootstrap DataTable with search, pagination, and sorting features.
 - Enabling admins to download attendee lists for specific events in CSV format.
-- Maintaining server-side validation to ensure data integrity and security.
+- Maintaining client-side and server-side validation to ensure data integrity and security.
 - Using prepared statements to prevent SQL injection vulnerabilities.
 -Following the MVC architecture for better code organization and maintainability.
 
@@ -99,6 +99,12 @@ Open browser and visit that pages.
 
 <img src="https://snipboard.io/RCvHu3.jpg">
 
+<br>
+
+- Event Registration Form Page (http://localhost:9999/event-attendee-reg-form)
+
+<img src="https://snipboard.io/mVj0TC.jpg">
+
 
 <br>
 
@@ -141,14 +147,35 @@ Open browser and visit that pages.
 
 ### Others
 
-
-- Validation For Require Field : 
+- Server Side Validation For Require Field : 
 <img src="https://snipboard.io/MBIwbk.jpg">
 
 <br>
 
-- Validation For Unique Field : 
+- Server Side Validation For Unique Field : 
 <img src="https://snipboard.io/6o7CYy.jpg">
+
+<br>
+
+- Client Side Validation Register: 
+<img src="https://snipboard.io/jT6Fch.jpg">
+
+<br>
+
+- Client Side Validation Login: 
+<img src="https://snipboard.io/xpmz0e.jpg">
+
+<br>
+
+- Client Side Validation Event Reg Form: 
+<img src="https://snipboard.io/LFURaI.jpg">
+
+<br>
+
+- Client Side Validation For Event Event: 
+<img src="https://snipboard.io/iA73gX.jpg">
+
+<br>
 
 - Success Message Added : 
 <img src="https://snipboard.io/uG1hzf.jpg">

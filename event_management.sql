@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 02, 2025 at 04:36 PM
+-- Generation Time: Feb 02, 2025 at 05:31 PM
 -- Server version: 8.0.40-0ubuntu0.22.04.1
 -- PHP Version: 8.1.31
 
@@ -51,10 +51,11 @@ INSERT INTO `events` (`id`, `user_id`, `title`, `description`, `date`, `venue`, 
 (14, 5, 'Eu sit odit in sunt', 'Aliquid sit aspernat', '1975-02-27', 'Adipisicing exercita', 60, '2025-02-02 03:13:53'),
 (15, 5, 'Veniam hic voluptas', 'Voluptatum quae quis', '1984-03-21', 'Mollit et nisi dolor', 70, '2025-02-02 03:12:42'),
 (16, 5, 'Ut minima sed ex vol', 'Velit beatae sunt re', '1986-11-07', 'In iusto eveniet sa', 67, '2025-02-02 03:08:37'),
-(17, 21, 'Commodi laborum Arc', 'Ut quo numquam quam', '2020-06-06', 'Elit autem aut odio', 52, '2025-02-02 10:11:39'),
-(18, 21, 'Adipisicing quis qua', 'Esse officia aut cu', '1994-09-03', 'Facilis consequatur', 15, '2025-02-02 10:24:11'),
+(17, 21, 'Commodi laborum Arc', 'Ut quo numquam quam', '2020-06-06', 'Elit autem aut odio', 40, '2025-02-02 11:30:54'),
+(18, 21, 'hhjhgggjg', 'Esse officia aut cu', '1994-09-03', 'Facilis consequatur', 15, '2025-02-02 11:29:55'),
 (19, 21, 'PHP Adda', 'This is a Awesome program.', '2025-02-05', 'Mirpur, Dhaka', 50, '2025-02-02 10:26:14'),
-(20, 21, 'Python Adda', 'This is nice program', '2025-02-10', 'Mirpur, Dhaka', 40, '2025-02-02 10:27:10');
+(20, 21, 'Python Adda', 'This is nice program', '2025-02-10', 'Mirpur, Dhaka', 40, '2025-02-02 10:27:10'),
+(21, 21, 'Doloribus ipsam haru', 'Reiciendis et fuga', '2012-07-21', 'Qui in nostrud maxim', 4, '2025-02-02 11:26:47');
 
 -- --------------------------------------------------------
 
@@ -82,7 +83,9 @@ INSERT INTO `event_attendee_registrations` (`id`, `event_id`, `user_id`, `create
 (6, 14, 18, '2025-02-02 06:21:27'),
 (7, 13, 19, '2025-02-02 06:44:48'),
 (8, 10, 19, '2025-02-02 06:46:31'),
-(9, 13, 20, '2025-02-02 07:13:46');
+(9, 13, 20, '2025-02-02 07:13:46'),
+(10, 20, 22, '2025-02-02 11:15:56'),
+(11, 20, 23, '2025-02-02 11:16:48');
 
 -- --------------------------------------------------------
 
@@ -122,7 +125,9 @@ INSERT INTO `users` (`id`, `name`, `email`, `role`, `phone`, `address`, `passwor
 (18, 'Francesca Moreno', 'namasexuni@mailinator.com', 'attendee', '+1 (424) 251-2375', 'Ipsum commodo magni', NULL, '2025-02-02 12:21:27'),
 (19, 'Marcia Tanner', 'cipegucezy@mailinator.com', 'attendee', '+1 (973) 414-8384', 'Est in omnis quia al', NULL, '2025-02-02 12:44:48'),
 (20, 'Dalton Odom', 'cyqyb@mailinator.com', 'attendee', '+1 (493) 937-8955', 'Dolores voluptate in', NULL, '2025-02-02 13:13:46'),
-(21, 'Mr Admin', 'admin@gmail.com', 'admin', NULL, NULL, '$2y$10$fdCu0f6IlXXx5R3kub5cCOYTw1o9ZnmIH52fzr9uTvJvFF/bEtEFi', '2025-02-02 15:30:02');
+(21, 'Mr Admin', 'admin@gmail.com', 'admin', NULL, NULL, '$2y$10$fdCu0f6IlXXx5R3kub5cCOYTw1o9ZnmIH52fzr9uTvJvFF/bEtEFi', '2025-02-02 15:30:02'),
+(22, 'Daria Nielsen', 'jileruv@mailinator.com', 'attendee', '+1 (872) 222-4815', 'Voluptas laborum Ni', NULL, '2025-02-02 17:15:56'),
+(23, 'Kirsten Ware', 'nyfiwuto@mailinator.com', 'attendee', '+1 (101) 562-9286', 'Velit duis totam in', NULL, '2025-02-02 17:16:48');
 
 --
 -- Indexes for dumped tables
@@ -158,19 +163,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `event_attendee_registrations`
 --
 ALTER TABLE `event_attendee_registrations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- Constraints for dumped tables
